@@ -20,11 +20,32 @@ def main():
 		else:
 		    with open("EventList.txt", "w") as f: f.write(hours[h]+':'+minutes[m]+':'+seconds[s]+'\n')
 		i = 0
-		# Create Screen Elements of the Alarm
-		while(len(lines)>i):
 
-			print(lines[i])
-			i+=1
+		xpos = 10
+		ypos = 10
+		# Create Screen Elements of the Alarm
+		if(lines != None):
+			while(len(lines)>i):
+				eventData = lines[i].split('ƒƒ')
+				eventName = eventData[0][:5]
+				eventData = lines[i].split(eventData[0])
+
+				eventHour = eventData[1].replace('ƒƒ',' ')
+				eventHour = eventHour.split(' ')
+				if(eventHour[2] == 'True'):
+					eventState = 'Enabled'
+				else:
+					eventState = 'Disabled'
+				eventHour = eventHour[1]
+				eventName = eventName + '...'
+				# Elements of 
+				tk.Label(alaramWindow, text= eventName, font=('Helvetica',20), fg='#43C42A', bg='#000000',).place(x=xpos, y=ypos)
+				tk.Label(alaramWindow, text= eventHour, font=('Helvetica',20), fg='#43C42A', bg='#000000',).place(x=xpos+120, y=ypos)
+				tk.Label(alaramWindow, text= eventState, font=('Helvetica',20), fg='#43C42A', bg='#000000',).place(x=xpos+250, y=ypos)
+				ypos += 50
+				i+=1
+		else:
+			tk.Label(alaramWindow, text='NOT FOUND', font=('Helvetica',50), fg='#43C42A', bg='#000000').place(x=0,y=50)
 	show_alarm_list()
 	tk.Button(alaramWindow, name='add', text='Add Alarm', command=lambda:set_alarm(), width=8, font=('Helvetica',12), border = 0, bg = '#43C42A').place(x=260,y=155)
 	def set_alarm():
@@ -52,12 +73,13 @@ def main():
 			global m
 			global s
 			fileExists = os.path.exists('EventList.txt')
+			state = True
 			if (fileExists == True):
 			    with open("EventList.txt", "a") as f:
-			        f.write(alarmName+' '+hours[h]+':'+minutes[m]+':'+seconds[s]+'\n')
+			        f.write(alarmName+'ƒƒ'+hours[h]+':'+minutes[m]+':'+seconds[s]+'ƒƒ'+str(state)+'\n')
 			else:
 			    with open("EventList.txt", "w") as f:
-			        f.write(alarmName+' '+hours[h]+':'+minutes[m]+':'+seconds[s]+'\n')
+			        f.write(alarmName+'ƒƒ'+hours[h]+':'+minutes[m]+':'+seconds[s]+'ƒƒ'+state+'\n')
 			setAlarmWindow.destroy()
 			main()
 		def change_time_unit(time, timeUnit):
