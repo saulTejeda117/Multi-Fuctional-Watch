@@ -1,0 +1,3 @@
+Dentistaƒƒ18:30:00ƒƒTrue
+Medio Diaƒƒ12:00:00ƒƒFalse
+Escuelaƒƒ08:30:00ƒƒTrue
