@@ -12,42 +12,6 @@ def main():
 	alaramWindow.title('Alarm Clock')
 	alaramWindow.configure(width=500, height=200, bg='#000000')
 	alaramWindow.resizable(False, False)
-	def show_alarm_list():
-		fileExists = os.path.exists('EventList.txt')
-		if (fileExists == True):
-			with open("EventList.txt") as f: 
-				lines = f.readlines()
-		else:
-		    with open("EventList.txt", "w") as f: f.write(hours[h]+':'+minutes[m]+':'+seconds[s]+'\n')
-		i = 0
-
-		xpos = 10
-		ypos = 10
-		# Create Screen Elements of the Alarm
-		if(lines != None):
-			while(len(lines)>i):
-				eventData = lines[i].split('ƒƒ')
-				eventName = eventData[0][:5]
-				eventData = lines[i].split(eventData[0])
-
-				eventHour = eventData[1].replace('ƒƒ',' ')
-				eventHour = eventHour.split(' ')
-				if(eventHour[2] == 'True'):
-					eventState = 'Enabled'
-				else:
-					eventState = 'Disabled'
-				eventHour = eventHour[1]
-				eventName = eventName + '...'
-				# Elements of 
-				tk.Label(alaramWindow, text= eventName, font=('Helvetica',20), fg='#43C42A', bg='#000000',).place(x=xpos, y=ypos)
-				tk.Label(alaramWindow, text= eventHour, font=('Helvetica',20), fg='#43C42A', bg='#000000',).place(x=xpos+120, y=ypos)
-				tk.Label(alaramWindow, text= eventState, font=('Helvetica',20), fg='#43C42A', bg='#000000',).place(x=xpos+250, y=ypos)
-				ypos += 50
-				i+=1
-		else:
-			tk.Label(alaramWindow, text='NOT FOUND', font=('Helvetica',50), fg='#43C42A', bg='#000000').place(x=0,y=50)
-	show_alarm_list()
-	tk.Button(alaramWindow, name='add', text='Add Alarm', command=lambda:set_alarm(), width=8, font=('Helvetica',12), border = 0, bg = '#43C42A').place(x=260,y=155)
 	def set_alarm():
 		alaramWindow.destroy()
 		setAlarmWindow = tk.Tk()
@@ -168,5 +132,46 @@ def main():
 		# Return to Alarm List Window
 		tk.Button(setAlarmWindow, name='check', text='Alarms', command=lambda:stop_screen(), width=8, font=('Helvetica',12), border = 0, bg = '#43C42A').place(x=260,y=160)
 		setAlarmWindow.mainloop()
+	def show_alarm_list():
+		fileExists = os.path.exists('EventList.txt')
+		if (fileExists == True):
+			with open("EventList.txt") as f: 
+				lines = f.readlines()
+		else:
+		    with open("EventList.txt", "w") as f: f.write(hours[h]+':'+minutes[m]+':'+seconds[s]+'\n')
+		i = 0
+		xpos = 75
+		ypos = 0
+		# Create Screen Elements of the Alarm
+		if(lines != None):
+			while(len(lines)>i):
+				eventData = lines[i].split('ƒƒ')
+				eventName = eventData[0][:5]
+				eventData = lines[i].split(eventData[0])
+				eventHour = eventData[1].replace('ƒƒ',' ')
+				eventHour = eventHour.split(' ')
+				if(eventHour[2] == 'True\n'):
+					eventState = 'Enabled'
+					fontColor = '#000000'
+					bgColor = '#43C42A'
+					tk.Button(alaramWindow, width= 200, height = 2, fg='#000000', bg='#43C42A', border= 0).place(x=0, y=ypos) 
+				else:
+					eventState = 'Disabled'
+					fontColor = '#43C42A'
+					bgColor = '#000000'
+					tk.Button(alaramWindow, width= 200, height = 2, fg='#000000', bg='#000000', border= 0).place(x=0, y=ypos)
+				eventHour = eventHour[1]
+				eventName = eventName + '...'
+				# Elements of 
+				tk.Label(alaramWindow, text= eventName, font=('Helvetica',18), fg=fontColor, bg=bgColor).place(x=xpos, y=ypos+2)
+				tk.Label(alaramWindow, text= eventHour, font=('Helvetica',18), fg=fontColor, bg=bgColor).place(x=xpos+120, y=ypos+2)
+				tk.Label(alaramWindow, text= eventState, font=('Helvetica',18), fg=fontColor, bg=bgColor).place(x=xpos+250, y=ypos+2)
+				ypos += 40
+				i+=1
+		else:
+			tk.Label(alaramWindow, text='NOT FOUND', font=('Helvetica',50), fg='#43C42A', bg='#000000').place(x=0,y=50)
+
+	show_alarm_list()
+	tk.Button(alaramWindow, name='add', text='Add Alarm', command=lambda:set_alarm(), width=8, font=('Helvetica',12), border = 0, bg = '#43C42A').place(x=200,y=155)
 	alaramWindow.mainloop()
 main()
