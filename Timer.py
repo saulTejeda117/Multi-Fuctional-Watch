@@ -1,12 +1,12 @@
 # Timer Function
 
+# <------UNCOMMENT ALL 'MIXER' OCCURRENCES TO PLAY ALARM SOUND!!!!!------->
+
 # GUI Dependencies
 import tkinter as tk
 from tkinter import messagebox
 
 # Play Sound Dependencies
-# <------NOTE UNCOMMENT ALL 'MIXER' OCCURRENCES------->
-
 #from pygame import mixer
 
 # Clock Dependencies
@@ -56,14 +56,14 @@ def main():
 			restart = messagebox.askokcancel(message="¿Desea continuar?", title="Reinicio")
 			if(restart == True):
 				# mixer.music.stop()
+				restart = False
 				mainWindow.destroy()
 				main()
 			else:
 				# mixer.music.stop()
+				restart = True
 				mainWindow.destroy()
-
 	def counting_down():
-		# End Time
 		global finishTime
 		currentTime = datetime.now()
 		totalTime = int((finishTime - currentTime).total_seconds())
@@ -131,22 +131,107 @@ def main():
 	h = 0
 	m = 0
 	s = 0
-	# Up Buttons
-	tk.Button(mainWindow, text = '⯅', font=('Helvetica',20), fg='#43C42A', bg='#000000', border= 0, height=0, command = lambda: change_time_unit(1,0)).place(x=120,y=0)
-	tk.Button(mainWindow, text = '⯅', font=('Helvetica',20), fg='#43C42A', bg='#000000', border= 0, height=0, command = lambda: change_time_unit(1,1)).place(x=227,y=0)
-	tk.Button(mainWindow, text = '⯅', font=('Helvetica',20), fg='#43C42A', bg='#000000', border= 0, height=0, command = lambda: change_time_unit(1,2)).place(x=330,y=0)
-	# Down Buttons
-	tk.Button(mainWindow, text = '⯆', font=('Helvetica',20), fg='#43C42A', bg='#000000', border= 0, height=0, command = lambda: change_time_unit(-1,0)).place(x=120,y=103)
-	tk.Button(mainWindow, text = '⯆', font=('Helvetica',20), fg='#43C42A', bg='#000000', border= 0, height=0, command = lambda: change_time_unit(-1,1)).place(x=227,y=103)
-	tk.Button(mainWindow, text = '⯆', font=('Helvetica',20), fg='#43C42A', bg='#000000', border= 0, height=0, command = lambda: change_time_unit(-1,2)).place(x=330,y=103)
+	# Up Selectors
+	tk.Button(mainWindow, 
+		text = '⯅', 
+		font=('Helvetica',20), 
+		fg='#43C42A', 
+		bg='#000000', 
+		border= 0, 
+		height=0, 
+		command = lambda: change_time_unit(1,0)
+	).place(x=120,y=0)
+	tk.Button(mainWindow, 
+		text = '⯅', 
+		font=('Helvetica',20), 
+		fg='#43C42A', 
+		bg='#000000', 
+		border= 0, 
+		height=0, 
+		command = lambda: change_time_unit(1,1)
+	).place(x=227,y=0)
+	tk.Button(mainWindow, 
+		text = '⯅', 
+		font=('Helvetica',20), 
+		fg='#43C42A', 
+		bg='#000000', 
+		border= 0, 
+		height=0, 
+		command = lambda: change_time_unit(1,2)
+	).place(x=330,y=0)
+	# Down Selectors
+	tk.Button(mainWindow, 
+		text = '⯆', 
+		font=('Helvetica',20), 
+		fg='#43C42A', 
+		bg='#000000', 
+		border= 0, 
+		height=0, 
+		command = lambda: change_time_unit(-1,0)
+	).place(x=120,y=103)
+	tk.Button(mainWindow, 
+		text = '⯆', 
+		font=('Helvetica',20), 
+		fg='#43C42A', 
+		bg='#000000', 
+		border= 0, 
+		height=0, 
+		command = lambda: change_time_unit(-1,1)
+	).place(x=227,y=103)
+	tk.Button(mainWindow, 
+		text = '⯆', 
+		font=('Helvetica',20), 
+		fg='#43C42A', 
+		bg='#000000', 
+		border= 0, 
+		height=0, 
+		command = lambda: change_time_unit(-1,2)
+	).place(x=330,y=103)
 	# Show time elements
-	tk.Label(mainWindow, text = hours[h], name='hourSelector', font=('Helvetica',55), fg='#43C42A', bg='#000000').place(x=100,y=35)
-	tk.Label(mainWindow, text = ':', font=('Helvetica',45), fg='#43C42A', bg='#000000').place(x=185,y=35)
-	tk.Label(mainWindow, text = minutes[m], name='minuteSelector', font=('Helvetica',55), fg='#43C42A', bg='#000000').place(x=205,y=35)
-	tk.Label(mainWindow, text = ':', font=('Helvetica',45), fg='#43C42A', bg='#000000').place(x=290,y=35)
-	tk.Label(mainWindow, text = seconds[s], name='secondsSelector', font=('Helvetica',55), fg='#43C42A', bg='#000000').place(x=310,y=35)
+	tk.Label(mainWindow, 
+		text = hours[h], 
+		name='hourSelector', 
+		font=('Helvetica',55), 
+		fg='#43C42A', 
+		bg='#000000'
+	).place(x=100,y=35)
+	tk.Label(mainWindow, 
+		text = ':', 
+		font=('Helvetica',45), 
+		fg='#43C42A', 
+		bg='#000000'
+	).place(x=185,y=35)
+	tk.Label(mainWindow, 
+		text = minutes[m], 
+		name='minuteSelector', 
+		font=('Helvetica',55), 
+		fg='#43C42A', 
+		bg='#000000'
+	).place(x=205,y=35)
+	tk.Label(mainWindow, 
+		text = ':', 
+		font=('Helvetica',45), 
+		fg='#43C42A', 
+		bg='#000000'
+	).place(x=290,y=35)
+	tk.Label(mainWindow, 
+		text = seconds[s], 
+		name='secondsSelector', 
+		font=('Helvetica',55), 
+		fg='#43C42A', 
+		bg='#000000'
+	).place(x=310,y=35)
 	# Start Button
-	tk.Button(mainWindow, text='Start', name='start', font=('Helvetica',12), border=0, width=8, fg='#000000', bg='#43C42A', command=lambda:start_count_down()).place(x=210,y=155)
+	tk.Button(mainWindow, 
+		text='Start', 
+		name='start', 
+		font=('Helvetica',12), 
+		border=0, 
+		width=8, 
+		fg='#000000', 
+		bg='#43C42A', 
+		command=start_count_down
+	).place(x=210,y=155)
 	mainWindow.mainloop()
 if __name__ == '__main__':
     main()
