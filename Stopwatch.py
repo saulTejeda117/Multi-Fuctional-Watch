@@ -1,4 +1,4 @@
-# Stopwatch Function
+# Stopwatch Appplication
 
 # GUI Dependencies
 import tkinter as tk
@@ -6,10 +6,19 @@ import tkinter as tk
 from datetime import datetime, timedelta
 
 def main():
+	# Widgets colors
+	blackColor = '#000000'
+	greenColor = '#43C42A'
+
 	stopwatchWindow = tk.Tk()
 	stopwatchWindow.title('Stop Watch')
-	stopwatchWindow.configure(width=500,height=200, bg='#000000')
+	stopwatchWindow.configure(width=500,height=200, bg=blackColor)
 	stopwatchWindow.resizable(False, False)
+	# Set window screen position using screenwidth
+	screen_width = stopwatchWindow.winfo_screenwidth()
+	screen_width = screen_width-500
+	stopwatchWindow.geometry("500x200+"+str(screen_width)+"+0")
+
 	# Prettier format 00:00:00
 	def format_time(seconds):
 		hour = int(seconds / 60 / 60)
@@ -29,9 +38,9 @@ def main():
 		tk.Label(stopwatchWindow, 
 			name = 'time', 
 			text=currentTime, 
-			fg='#43C42A', 
+			fg=greenColor, 
 			font=('Helvetica',80), 
-			bg='#000000'
+			bg=blackColor
 		).place(x=35,y=10)
 		# Iterates just if its not paused
 		if(pause==False):
@@ -86,7 +95,7 @@ def main():
 			command=continue_counting, 
 			width=8, font=('Helvetica',14), 
 			border = 0, 
-			bg = '#43C42A'
+			bg = greenColor
 		).place(x=150,y=140)
 		pauseButton = stopwatchWindow.nametowidget('pause')
 		pauseButton['text']='Stop'
@@ -97,7 +106,7 @@ def main():
 			width=8, 
 			font=('Helvetica',14), 
 			border = 0, 
-			bg = '#43C42A'
+			bg = greenColor
 		).place(x=260,y=140)
 	# Get the actual time 
 	nonTime = datetime.now()
@@ -107,9 +116,9 @@ def main():
 	tk.Label(stopwatchWindow, 
 		name = 'time', 
 		text=currentTime, 
-		fg='#43C42A', 
+		fg=greenColor, 
 		font=('Helvetica',80), 
-		bg='#000000'
+		bg=blackColor
 	).place(x=35,y=10)
 	# Start the counting
 	tk.Button(stopwatchWindow, 
@@ -118,7 +127,7 @@ def main():
 		command=start_counting, 
 		width=8, font=('Helvetica',14), 
 		border = 0, 
-		bg = '#43C42A'
+		bg = greenColor
 	).place(x=150,y=140)
 	tk.Button(stopwatchWindow, 
 		name='pause', 
@@ -127,11 +136,13 @@ def main():
 		width=8, 
 		font=('Helvetica',14), 
 		border = 0, 
-		bg = '#43C42A'
+		bg = greenColor
 	).place(x=260,y=140)
 	# Use this to disable the pause button at the begining
 	pauseButton = stopwatchWindow.nametowidget('pause')
 	pauseButton['state']='disable'
+	# Always show the window above all
+	stopwatchWindow.attributes('-topmost',True)
 	stopwatchWindow.mainloop()
 if __name__ == '__main__':
     main()

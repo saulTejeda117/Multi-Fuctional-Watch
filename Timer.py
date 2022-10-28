@@ -1,4 +1,4 @@
-# Timer Function
+# Timer Application
 
 # <------UNCOMMENT ALL 'MIXER' OCCURRENCES TO PLAY ALARM SOUND!!!!!------->
 
@@ -13,12 +13,22 @@ from tkinter import messagebox
 from datetime import datetime, timedelta
 
 def main():
+	# Widgets colors
+	blackColor = '#000000'
+	greenColor = '#43C42A'
+	
 	#mixer.init()
-	mainWindow = tk.Tk()
-	# MainWindow features
-	mainWindow.title('Timer')
-	mainWindow.configure(width=500, height=200, bg='#000000')
-	mainWindow.resizable(False, False)
+	timerWindow = tk.Tk()
+	# timerWindow features
+	timerWindow.title('Timer')
+	timerWindow.configure(width=500, height=200, bg='#000000')
+	timerWindow.resizable(False, False)
+
+	# Set window screen position using screenwidth
+	screen_width = timerWindow.winfo_screenwidth()
+	screen_width = screen_width-500
+	timerWindow.geometry("500x200+"+str(screen_width)+"+0")
+
 	hours = []
 	minutes = []
 	seconds = []
@@ -38,13 +48,13 @@ def main():
 		minutes = int(seconds/60)
 		seconds -= minutes*60
 
-		hourSelector = mainWindow.nametowidget('hourSelector')
+		hourSelector = timerWindow.nametowidget('hourSelector')
 		hourSelector.configure(text=f"{hour:02d}")
 
-		minuteSelector = mainWindow.nametowidget('minuteSelector')
+		minuteSelector = timerWindow.nametowidget('minuteSelector')
 		minuteSelector.configure(text=f"{minutes:02d}")
 
-		secondsSelector = mainWindow.nametowidget('secondsSelector')
+		secondsSelector = timerWindow.nametowidget('secondsSelector')
 		secondsSelector.configure(text=f"{seconds:02d}")
 	def restart_timer():
 		# Time variables
@@ -56,20 +66,20 @@ def main():
 			restart = messagebox.askokcancel(message="¿Desea continuar?", title="Reinicio")
 			if(restart == True):
 				# mixer.music.stop()
-				restart = False
-				mainWindow.destroy()
+				restart = True
+				timerWindow.destroy()
 				main()
 			else:
 				# mixer.music.stop()
 				restart = True
-				mainWindow.destroy()
+				timerWindow.destroy()
 	def counting_down():
 		global finishTime
 		currentTime = datetime.now()
 		totalTime = int((finishTime - currentTime).total_seconds())
 		if(totalTime > 0):
 			updating_time_units(totalTime)
-			mainWindow.after(500, counting_down)	
+			timerWindow.after(500, counting_down)	
 		else:
 			updating_time_units(0)
 			restart_timer()
@@ -85,15 +95,16 @@ def main():
 		hoursAdded = timedelta(hours=h,minutes=m,seconds=s) 
 		# print(hoursAdded)
 		finishTime = (datetime.now() + hoursAdded)
-		print(datetime.now(),'*****',finishTime)
+		# print(datetime.now(),'*****',finishTime)
 		counting_down()
-
+		
+	# This function get 1/-1 and the time unit to configure with this parameter
 	def change_time_unit(time, timeUnit):
 		global h
 		global m
 		global s
 		if(timeUnit == 0):
-			hourSelector = mainWindow.nametowidget('hourSelector')
+			hourSelector = timerWindow.nametowidget('hourSelector')
 			if(h<0):
 				h=23
 				hourShown = hours[h]
@@ -105,7 +116,7 @@ def main():
 				hourShown = hours[h]
 			hourSelector.configure(text=hourShown)
 		elif(timeUnit == 1):
-			minuteSelector = mainWindow.nametowidget('minuteSelector')
+			minuteSelector = timerWindow.nametowidget('minuteSelector')
 			if(m<0):
 				m = 59
 				mintesShown = minutes[m]
@@ -117,7 +128,7 @@ def main():
 				mintesShown = minutes[m]
 			minuteSelector.configure(text=mintesShown)
 		else:
-			secondsSelector = mainWindow.nametowidget('secondsSelector')
+			secondsSelector = timerWindow.nametowidget('secondsSelector')
 			if(s<0):
 				s = 59
 				secondsShown = seconds[s]
@@ -132,7 +143,7 @@ def main():
 	m = 0
 	s = 0
 	# Up Selectors
-	tk.Button(mainWindow, 
+	tk.Button(timerWindow, 
 		text = '⯅', 
 		font=('Helvetica',20), 
 		fg='#43C42A', 
@@ -141,7 +152,7 @@ def main():
 		height=0, 
 		command = lambda: change_time_unit(1,0)
 	).place(x=120,y=0)
-	tk.Button(mainWindow, 
+	tk.Button(timerWindow, 
 		text = '⯅', 
 		font=('Helvetica',20), 
 		fg='#43C42A', 
@@ -150,7 +161,7 @@ def main():
 		height=0, 
 		command = lambda: change_time_unit(1,1)
 	).place(x=227,y=0)
-	tk.Button(mainWindow, 
+	tk.Button(timerWindow, 
 		text = '⯅', 
 		font=('Helvetica',20), 
 		fg='#43C42A', 
@@ -160,7 +171,7 @@ def main():
 		command = lambda: change_time_unit(1,2)
 	).place(x=330,y=0)
 	# Down Selectors
-	tk.Button(mainWindow, 
+	tk.Button(timerWindow, 
 		text = '⯆', 
 		font=('Helvetica',20), 
 		fg='#43C42A', 
@@ -169,7 +180,7 @@ def main():
 		height=0, 
 		command = lambda: change_time_unit(-1,0)
 	).place(x=120,y=103)
-	tk.Button(mainWindow, 
+	tk.Button(timerWindow, 
 		text = '⯆', 
 		font=('Helvetica',20), 
 		fg='#43C42A', 
@@ -178,7 +189,7 @@ def main():
 		height=0, 
 		command = lambda: change_time_unit(-1,1)
 	).place(x=227,y=103)
-	tk.Button(mainWindow, 
+	tk.Button(timerWindow, 
 		text = '⯆', 
 		font=('Helvetica',20), 
 		fg='#43C42A', 
@@ -188,33 +199,33 @@ def main():
 		command = lambda: change_time_unit(-1,2)
 	).place(x=330,y=103)
 	# Show time elements
-	tk.Label(mainWindow, 
+	tk.Label(timerWindow, 
 		text = hours[h], 
 		name='hourSelector', 
 		font=('Helvetica',55), 
 		fg='#43C42A', 
 		bg='#000000'
 	).place(x=100,y=35)
-	tk.Label(mainWindow, 
+	tk.Label(timerWindow, 
 		text = ':', 
 		font=('Helvetica',45), 
 		fg='#43C42A', 
 		bg='#000000'
 	).place(x=185,y=35)
-	tk.Label(mainWindow, 
+	tk.Label(timerWindow, 
 		text = minutes[m], 
 		name='minuteSelector', 
 		font=('Helvetica',55), 
 		fg='#43C42A', 
 		bg='#000000'
 	).place(x=205,y=35)
-	tk.Label(mainWindow, 
+	tk.Label(timerWindow, 
 		text = ':', 
 		font=('Helvetica',45), 
 		fg='#43C42A', 
 		bg='#000000'
 	).place(x=290,y=35)
-	tk.Label(mainWindow, 
+	tk.Label(timerWindow, 
 		text = seconds[s], 
 		name='secondsSelector', 
 		font=('Helvetica',55), 
@@ -222,7 +233,7 @@ def main():
 		bg='#000000'
 	).place(x=310,y=35)
 	# Start Button
-	tk.Button(mainWindow, 
+	tk.Button(timerWindow, 
 		text='Start', 
 		name='start', 
 		font=('Helvetica',12), 
@@ -232,6 +243,8 @@ def main():
 		bg='#43C42A', 
 		command=start_count_down
 	).place(x=210,y=155)
-	mainWindow.mainloop()
+	# Always show the window above all
+	timerWindow.attributes('-topmost',True)
+	timerWindow.mainloop()
 if __name__ == '__main__':
     main()

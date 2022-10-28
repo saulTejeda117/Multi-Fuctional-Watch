@@ -1,12 +1,15 @@
-# Multifunctional Clock Features:
-# -> Stopwatch
-# -> Timer
-# -> Pomodoro
-# -> Alarm Clock
+# Multifunctional Clock Application Features:
+# -> Clock
+# 	-> Stopwatch
+# 	-> Timer
+# 	-> Pomodoro
+# 	-> Alarm Clock
 
+# Functions files import
 from Stopwatch import main as stopwath
 from Timer import main as timer
 from AlarmClock import main as alarmClock
+from Pomodoro import main as pomodoro
 
 # GUI Dependencies
 import tkinter as tk
@@ -23,18 +26,28 @@ def main():
 	mainWindow.title('Multi-Functional Watch')
 	mainWindow.configure(width=500,height=200, bg=blackColor)
 	mainWindow.resizable(False, False)
+	
+	# Set window screen position using screenwidth
+	screen_width = mainWindow.winfo_screenwidth()
+	screen_width = screen_width-500
+	mainWindow.geometry("500x200+"+str(screen_width)+"+0")
 
 	def call_stopwatch():
 		mainWindow.destroy()
 		stopwath()
+		main()
 	def call_timer():
 		mainWindow.destroy()
 		timer()
+		main()
 	def call_alarmClock():
 		mainWindow.destroy()
 		alarmClock()
+		main()
 	def call_pomodoro():
-		print('call_pomodoro')
+		mainWindow.destroy()
+		pomodoro()
+		main()
 
 	# Stopwatch/Timer/Pomodoro/AlarmClock Buttons 
 	tk.Button(mainWindow, 
@@ -92,8 +105,9 @@ def main():
 		).place(x=35,y=10)
 		# Iteration of the function
 		mainWindow.after(500, show_currentTime)
+	# Always show the window above all
+	mainWindow.attributes('-topmost',True)
 	show_currentTime()
 	mainWindow.mainloop()
-
 if __name__ == '__main__':
     main()
