@@ -5,7 +5,7 @@
 # 	-> Pomodoro
 # 	-> Alarm Clock
 
-# Functions files import
+# Functions files importation
 from Stopwatch import main as stopwath
 from Timer import main as timer
 from AlarmClock import main as alarmClock
