@@ -1,5 +1,12 @@
-# Pomodoro Tracker Application
+# Pomodoro Tracker Application Features:
+# -> Counting Pomodoro Iterations
+# -> Break times
+# -> Start 
+# -> Pause
+# -> Continue
+# -> Restart
 
+# GUI Dependencies
 import tkinter as tk
 
 # Clock Dependencies
@@ -29,7 +36,17 @@ def main():
 		return f"{minutes:02d}:{seconds:02d}"
 
 	def updating_time_units(seconds):
+		global numPomodoros
+		global breakDelay
 		currentTime = format_time(seconds)
+		print(seconds)
+		if(seconds==0 and breakDelay<3):
+			numPomodoros+=1
+			breakDelay+=1
+			print('No. Pomodoros:',numPomodoros,', ', breakDelay)
+			start_countDown()
+		elif(breakDelay==4):
+			print('Dalay Moderfoca')
 		minuteSelector = pomodoroWindow.nametowidget('time')
 		minuteSelector.configure(text=currentTime)
 
@@ -53,14 +70,48 @@ def main():
 		currentTime = format_time(int(currentSeconds))
 
 		finishTime = (datetime.now() + minutesAdded)
-		print('Start Count Down')
+		pauseButton = pomodoroWindow.nametowidget('pause')
+		pauseButton['state'] = 'normal'
 		counting_down()
 
-	
+	def restart():
+		pomodoroWindow.destroy()
+		main()
+
+	def stop_screen():
+		global stoppedTime
+		global pause 
+		pause = True
+		startButton = pomodoroWindow.nametowidget('start')
+		startButton['state']='disable'
+		tk.Button(pomodoroWindow, 
+			name='continue', 
+			text='Continue', 
+			#command=continue_counting, 
+			width=8, font=('Helvetica',14), 
+			border = 0, 
+			bg = greenColor
+		).place(x=260,y=140)
+		pauseButton = pomodoroWindow.nametowidget('pause')
+		pauseButton['text']='Stop'
+		tk.Button(pomodoroWindow, 
+			name='restart', 
+			text='Restart', 
+			#command=restart, 
+			width=8, 
+			font=('Helvetica',14), 
+			border = 0, 
+			bg = greenColor
+		).place(x=150,y=140)
+
+
+
+	global numPomodoros
+	global breakDelay
 	pomodoroTime = 25
+	numPomodoros = 0
 	breakTime = 5
-	breakDelay = 4
-	
+	breakDelay = 0
 
 	# Timer Window Elements
 	tk.Label(pomodoroWindow, 
@@ -81,12 +132,14 @@ def main():
 	tk.Button(pomodoroWindow, 
 		name='pause', 
 		text='Pause', 
-		# command=stop_screen, 
+		command=stop_screen, 
 		width=8, 
 		font=('Helvetica',14), 
 		border = 0, 
 		bg = greenColor
 	).place(x=260,y=140)
+	pauseButton = pomodoroWindow.nametowidget('pause')
+	pauseButton['state'] = 'disabled'
 	# Always show the window above all
 	pomodoroWindow.attributes('-topmost',True)
 	pomodoroWindow.mainloop()

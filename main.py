@@ -2,10 +2,15 @@
 # -> Clock
 # 	-> Stopwatch
 # 	-> Timer
-# 	-> Pomodoro
 # 	-> Alarm Clock
+# 	-> Pomodoro Tracker
 
-# Functions files importation
+# New Features:
+# -> Add a fucntion that changes the interface theme color
+# it would be contained in window's menu bar.
+
+
+# Functions files import
 from Stopwatch import main as stopwath
 from Timer import main as timer
 from AlarmClock import main as alarmClock
@@ -19,14 +24,14 @@ import time
 
 def main():
 	# Widgets colors
-	blackColor = '#000000'
+	blackColor = '#000001'
 	greenColor = '#43C42A'
 
 	mainWindow = tk.Tk()
 	mainWindow.title('Multi-Functional Watch')
-	mainWindow.configure(width=500,height=200, bg=blackColor)
+	mainWindow.configure(width=500,height=200, bg='#000000')
 	mainWindow.resizable(False, False)
-	
+
 	# Set window screen position using screenwidth
 	screen_width = mainWindow.winfo_screenwidth()
 	screen_width = screen_width-500
@@ -81,6 +86,7 @@ def main():
 		command = call_alarmClock
 	).place(x=260,y=150)
 	tk.Button(mainWindow, 
+		name='pomodoro',
 		text='Pomodoro',
 		fg=greenColor,
 		bg=blackColor, 
@@ -100,14 +106,24 @@ def main():
 		tk.Label(mainWindow, 
 			text=today[3], 
 			fg=greenColor, 
-			bg=blackColor, 
+			bg='#000001', 
 			font=('Helvetica', 80)
 		).place(x=35,y=10)
 		# Iteration of the function
 		mainWindow.after(500, show_currentTime)
 	# Always show the window above all
 	mainWindow.attributes('-topmost',True)
+
+	# Make every element with this color transparent
+	mainWindow.attributes('-transparentcolor','black')
+	# Set opacity window at 80%
+	mainWindow.attributes('-alpha',0.8)
+	# Hide title bar of the window
+	mainWindow.overrideredirect(1)
+
 	show_currentTime()
+	
 	mainWindow.mainloop()
+
 if __name__ == '__main__':
     main()
