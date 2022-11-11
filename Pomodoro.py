@@ -39,29 +39,66 @@ def main():
 		global numPomodoros
 		global breakDelay
 		currentTime = format_time(seconds)
-		print(seconds)
+		#print(seconds)
 		if(seconds==0 and breakDelay<3):
 			numPomodoros+=1
 			breakDelay+=1
-			print('No. Pomodoros:',numPomodoros,', ', breakDelay)
+			#print('No. Pomodoros:',numPomodoros,', ', breakDelay)
 			start_countDown()
 		elif(breakDelay==4):
 			print('Dalay Moderfoca')
+
+
 		minuteSelector = pomodoroWindow.nametowidget('time')
 		minuteSelector.configure(text=currentTime)
+
+
+
+
+	def continue_counting():
+		global stoppedTime
+		global currentSeconds
+		global beginTime
+		global pause
+		# Convert the elapsed time into a seconds format to get
+		# a new begin time when the program is paused and then 
+		# make the current time operation
+		currentSeconds = timedelta(seconds=currentSeconds)
+		beginTime = (datetime.now() - currentSeconds)
+		currentTime = (datetime.now() - beginTime).total_seconds()
+		print(currentTime)
+		print(beginTime)
+
+		# currentTime = format_time(int(currentTime))
+
+		# Widgets Restart/Continue Elimination
+		continueButton = pomodoroWindow.nametowidget('continue')
+		continueButton.destroy()
+		pauseRestart= pomodoroWindow.nametowidget('restart')
+		pauseRestart.destroy()
+		startButton = pomodoroWindow.nametowidget('start')
+		startButton['state']='normal'
+		pauseButton = pomodoroWindow.nametowidget('pause')
+		pauseButton['text']='Pause'
+		# Change the programs state to continue
+		pause = False
+		updating_time_units(int(currentTime))
 
 	def counting_down():
 		global finishTime
 		currentTime = datetime.now()
+		stoppedTime = datetime.now()
 		totalTime = int((finishTime - currentTime).total_seconds())
-		if(totalTime > 0):
+		if(totalTime > 0 and pause==False):
 			updating_time_units(totalTime)
 			pomodoroWindow.after(500, counting_down)	
-		else:
+		elif(totalTime == 0):
 			updating_time_units(0)
 	
 	def start_countDown():
 		global finishTime
+		global pause
+		global currentSeconds
 		# Add 25 minutes to the current time
 		nonTime = datetime.now()
 		# Convertion of int to a time format
@@ -87,7 +124,7 @@ def main():
 		tk.Button(pomodoroWindow, 
 			name='continue', 
 			text='Continue', 
-			#command=continue_counting, 
+			command=continue_counting, 
 			width=8, font=('Helvetica',14), 
 			border = 0, 
 			bg = greenColor
@@ -97,7 +134,7 @@ def main():
 		tk.Button(pomodoroWindow, 
 			name='restart', 
 			text='Restart', 
-			#command=restart, 
+			command=restart, 
 			width=8, 
 			font=('Helvetica',14), 
 			border = 0, 
@@ -108,10 +145,13 @@ def main():
 
 	global numPomodoros
 	global breakDelay
+	global pause
 	pomodoroTime = 25
 	numPomodoros = 0
 	breakTime = 5
 	breakDelay = 0
+	pause = False
+ 
 
 	# Timer Window Elements
 	tk.Label(pomodoroWindow, 
