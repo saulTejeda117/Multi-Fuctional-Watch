@@ -39,37 +39,30 @@ def main():
 		global numPomodoros
 		global breakDelay
 		currentTime = format_time(seconds)
-		#print(seconds)
 		if(seconds==0 and breakDelay<3):
 			numPomodoros+=1
 			breakDelay+=1
-			#print('No. Pomodoros:',numPomodoros,', ', breakDelay)
+			print('No. Pomodoros:',numPomodoros,', ', breakDelay)
 			start_countDown()
 		elif(breakDelay==4):
 			print('Dalay Moderfoca')
-
-
 		minuteSelector = pomodoroWindow.nametowidget('time')
 		minuteSelector.configure(text=currentTime)
 
-
-
-
 	def continue_counting():
-		global stoppedTime
 		global currentSeconds
 		global beginTime
+		global finishTime
 		global pause
 		# Convert the elapsed time into a seconds format to get
 		# a new begin time when the program is paused and then 
 		# make the current time operation
 		currentSeconds = timedelta(seconds=currentSeconds)
 		beginTime = (datetime.now() - currentSeconds)
-		currentTime = (datetime.now() - beginTime).total_seconds()
-		print(currentTime)
-		print(beginTime)
-
-		# currentTime = format_time(int(currentTime))
+		minutesAdded = timedelta(minutes=pomodoroTime)
+		currentTime = (minutesAdded-currentSeconds).total_seconds()
+		currentTime = timedelta(seconds=currentTime)
+		finishTime = (datetime.now() + currentTime)
 
 		# Widgets Restart/Continue Elimination
 		continueButton = pomodoroWindow.nametowidget('continue')
@@ -82,13 +75,16 @@ def main():
 		pauseButton['text']='Pause'
 		# Change the programs state to continue
 		pause = False
-		updating_time_units(int(currentTime))
+		counting_down()
 
 	def counting_down():
 		global finishTime
+		global currentSeconds
+		global beginTime
 		currentTime = datetime.now()
 		stoppedTime = datetime.now()
 		totalTime = int((finishTime - currentTime).total_seconds())
+		currentSeconds = (datetime.now() - beginTime).total_seconds()
 		if(totalTime > 0 and pause==False):
 			updating_time_units(totalTime)
 			pomodoroWindow.after(500, counting_down)	
@@ -97,15 +93,15 @@ def main():
 	
 	def start_countDown():
 		global finishTime
-		global pause
-		global currentSeconds
+		global beginTime
 		# Add 25 minutes to the current time
-		nonTime = datetime.now()
+		beginTime = datetime.now()
 		# Convertion of int to a time format
 		minutesAdded = timedelta(minutes=pomodoroTime) 
-		currentSeconds = (datetime.now() - nonTime + minutesAdded).total_seconds()
-		currentTime = format_time(int(currentSeconds))
 
+
+		totalLapseTime = (datetime.now() - beginTime + minutesAdded).total_seconds()	
+		currentTime = format_time(int(totalLapseTime))
 		finishTime = (datetime.now() + minutesAdded)
 		pauseButton = pomodoroWindow.nametowidget('pause')
 		pauseButton['state'] = 'normal'
@@ -116,7 +112,6 @@ def main():
 		main()
 
 	def stop_screen():
-		global stoppedTime
 		global pause 
 		pause = True
 		startButton = pomodoroWindow.nametowidget('start')
@@ -141,17 +136,14 @@ def main():
 			bg = greenColor
 		).place(x=150,y=140)
 
-
-
 	global numPomodoros
 	global breakDelay
 	global pause
-	pomodoroTime = 25
+	pomodoroTime = 1
 	numPomodoros = 0
 	breakTime = 5
 	breakDelay = 0
 	pause = False
- 
 
 	# Timer Window Elements
 	tk.Label(pomodoroWindow, 
@@ -178,6 +170,22 @@ def main():
 		border = 0, 
 		bg = greenColor
 	).place(x=260,y=140)
+	tk.Label(pomodoroWindow, 
+		name = 'pomodoros', 
+		text=numPomodoros, 
+		fg=blackColor, 
+		font=('Helvetica',12), 
+		bg=greenColor
+	).place(x=10,y=10)
+
+
+
+
+
+
+
+
+
 	pauseButton = pomodoroWindow.nametowidget('pause')
 	pauseButton['state'] = 'disabled'
 	# Always show the window above all

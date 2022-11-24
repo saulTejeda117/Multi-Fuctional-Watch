@@ -53,7 +53,7 @@ def main():
 		mainWindow.destroy()
 		pomodoro()
 		main()
-
+	tk.Text(mainWindow, bg=blackColor, bd=0, height=4.5, width=53).place(x=35,y=100)
 	# Stopwatch/Timer/Pomodoro/AlarmClock Buttons 
 	tk.Button(mainWindow, 
 		text='Stopwatch',
@@ -64,7 +64,7 @@ def main():
 		border=1,
 		activebackground=greenColor,
 		command = call_stopwatch
-	).place(x=40,y=150)
+	).place(x=40,y=135)
 	tk.Button(mainWindow, 
 		text='Timer',
 		fg=greenColor, 
@@ -74,7 +74,7 @@ def main():
 		border=1,
 		activebackground=greenColor,
 		command = call_timer
-	).place(x=150,y=150)
+	).place(x=145,y=135)
 	tk.Button(mainWindow, 
 		text='Alarm Clock',
 		fg=greenColor, 
@@ -84,7 +84,7 @@ def main():
 		border=1,
 		activebackground=greenColor,
 		command = call_alarmClock
-	).place(x=260,y=150)
+	).place(x=250,y=135)
 	tk.Button(mainWindow, 
 		name='pomodoro',
 		text='Pomodoro',
@@ -95,8 +95,7 @@ def main():
 		border=1,
 		activebackground=greenColor,
 		command = call_pomodoro
-	).place(x=370,y=150)
-
+	).place(x=355,y=135)
 	# Bucle function to update clock
 	def show_currentTime():
 		# Get current Date/Time/Year
@@ -120,7 +119,6 @@ def main():
 	mainWindow.attributes('-alpha',0.8)
 	# Hide title bar of the window
 	mainWindow.overrideredirect(1)
-
 	show_currentTime()
 	
 	mainWindow.mainloop()
