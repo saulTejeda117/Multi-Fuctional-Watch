@@ -2,7 +2,7 @@
 
 ## 📄 About 
 <p align = 'justify'>
-This is python desktop application constains a digital watch wich contains multiple functions:
+This is a simple python application with GUI wich constains a digital watch with multiple functions:
 </p>
 
 - Timer
@@ -31,11 +31,28 @@ This is python desktop application constains a digital watch wich contains multi
 
 ## 💻 Principal Interface
 ### 1. Main screen 
+<p align = 'justify'>
+When the application starts it'll show a digital clock with the current time: 
+</p>
+
+<img width="800px" src = "figs/principal_interface.png"><br>Fig. 1 Principal Interface</img>
+
+<p align = 'justify'>
+The user can navigate easily between windows, every button below the digital clock contains the different functions of the clock (timer, stopwatch, alarm clock and pomodoro timer).
+</p>
 
 ### 2. Timer 
 
+<img width="800px" src = "figs/principal_interface.png"><br>Fig.  Timer Window</img>
+
 ### 3. Stopwatch 
+
+<img width="800px" src = "figs/principal_interface.png"><br>Fig.  Stopwatch Window</img>
 
 ### 4. Alarm Clock 
 
-### 5. Pomodoro Tracker 
+<img width="800px" src = "figs/principal_interface.png"><br>Fig.  Alarm Clock Window</img>
+
+### 5. Pomodoro Timer 
+
+<img width="800px" src = "figs/principal_interface.png"><br>Fig.  Pomodoro Timer Window</img>
