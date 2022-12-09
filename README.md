@@ -8,7 +8,7 @@ This is python desktop application constains a digital watch wich contains multi
 - Timer
 - Alarm Clock
 - Stopwatch
-- Pomodoro Tracker
+- Pomodoro Timer
 
 ## 🔧 Software/Hardware Requierments
 - Python v.3.10 or greater
@@ -24,6 +24,10 @@ This is python desktop application constains a digital watch wich contains multi
   ````
   git clone https://github.com/saulTejeda117/Multi-Fuctional-Watch.git
   ````
+  
+  - Run as administrator 'setup' EXE file
+  
+  - **Application will start automatically after the setting up process ends**
 
 ## 💻 Principal Interface
 ### 1. Main screen 
