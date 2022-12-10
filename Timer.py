@@ -1,4 +1,7 @@
-# Timer Application
+# Timer Application Features:
+# -> Time Selector
+# -> Start 
+# -> Play an alarm sound
 
 # <------UNCOMMENT ALL 'MIXER' OCCURRENCES TO PLAY ALARM SOUND!!!!!------->
 
@@ -11,6 +14,16 @@ from tkinter import messagebox
 
 # Clock Dependencies
 from datetime import datetime, timedelta
+
+
+# Aspectos a mejorar:
+# -> Añadir Bucles para acortar la declaración de elementos repetidos
+# -> Eliminar variables globales
+# -> Crear Constantes para widgets que se utilizan varias veces
+#
+# -> Añadir Funciones de Pausa, Reinicio y Continuar
+
+
 
 def main():
 	# Widgets colors

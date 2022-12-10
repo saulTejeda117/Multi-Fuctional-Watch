@@ -39,10 +39,12 @@ def main():
 		global numPomodoros
 		global breakDelay
 		currentTime = format_time(seconds)
-		if(seconds==0 and breakDelay<3):
+		if(seconds==0 and numPomodoros!=3):
 			numPomodoros+=1
 			breakDelay+=1
 			print('No. Pomodoros:',numPomodoros,', ', breakDelay)
+			num_pomodoros = pomodoroWindow.nametowidget('pomodoros')
+			num_pomodoros['text'] = numPomodoros
 			start_countDown()
 		elif(breakDelay==4):
 			print('Dalay Moderfoca')
@@ -139,7 +141,7 @@ def main():
 	global numPomodoros
 	global breakDelay
 	global pause
-	pomodoroTime = 1
+	pomodoroTime = .1
 	numPomodoros = 0
 	breakTime = 5
 	breakDelay = 0
@@ -170,6 +172,7 @@ def main():
 		border = 0, 
 		bg = greenColor
 	).place(x=260,y=140)
+
 	tk.Label(pomodoroWindow, 
 		name = 'pomodoros', 
 		text=numPomodoros, 

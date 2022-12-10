@@ -1,4 +1,10 @@
-# Alarm Clock Application
+# Alarm Clock Application Features:
+# -> Shows Event List
+# -> Add Event
+# -> Search 
+# -> Delete 
+# -> Modify
+# -> Play an Alarm Sound
 
 # GUI Dependencies
 import tkinter as tk
